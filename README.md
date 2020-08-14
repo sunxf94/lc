@@ -1,0 +1,2 @@
+# lc
+linux config
