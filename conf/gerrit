@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#gerrit 提交代码，直接使用gerrit push，不需要填写分支名字
+
+function pushFunc {
+    git push origin HEAD:refs/for/$(git_branch)
+}
+
+function git_branch {
+    branch="`git branch 2>/dev/null | grep "^\*" | sed -e "s/^\*\ //"`"
+    if [ "${branch}" != "" ];then
+        if [ "${branch}" = "(no branch)" ];then
+            branch="(`git rev-parse --short HEAD`...)"
+        fi
+        echo "$branch"
+    fi
+}
+
+option="$1"
+
+case $option in
+push)
+    pushFunc
+    ;;
+esac
